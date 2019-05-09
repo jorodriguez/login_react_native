@@ -28,15 +28,9 @@ export default class Login extends Component {
     _userLogin = async () => {
 
         this.setState({ isLoggingIn: true, message: '' });
-        /*
-                var params = {
-                    username: this.state.username,
-                    password: this.state.password,
-                    grant_type: 'password'
-                };*/
 
         var proceed = false;
-        //fetch("https://"+Environment.CLIENT_API+"/oauth/token", {
+       
         await fetch("https://develop1.herokuapp.com/api/login?usuario=" + this.state.username + "&password=" + this.state.password, {
             method: "GET",
             headers: {
@@ -70,7 +64,7 @@ export default class Login extends Component {
             .catch(err => {
                 this.setState({ message: err.message });
                 this.setState({ isLoggingIn: false });
-                //Alert.alert(`Sucedió un error ${err}`);
+              
             });
     }
 
@@ -111,7 +105,6 @@ export default class Login extends Component {
                     style={{ fontSize: 14, color: 'red', padding: 5 }}>
                     mensaje : {this.state.message}
                 </Text>
-
 
                 {this.state.isLoggingIn && <ActivityIndicator />}
                 <View style={{ margin: 7 }} />

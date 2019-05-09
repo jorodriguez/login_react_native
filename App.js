@@ -9,8 +9,6 @@ export default class App extends React.Component {
     usuario:null
   }
 
-  usuario = { nombre: '' };
-
   render() {
     if (this.state.isLoggedIn)
       return <Principal
@@ -22,9 +20,8 @@ export default class App extends React.Component {
         <Image source={require('./assets/tux.png')} />
         <Login
           onLoginPress={
-            (_usuarioPam) => {
-              this.setState({ isLoggedIn: true ,usuario:_usuarioPam});              
-              //Alert.alert(`recibido ${JSON.stringify(this.state.usuario)}`);
+            (_usuarioParam) => {
+              this.setState({ isLoggedIn: true ,usuario:_usuarioParam});                            
             }
           }
         />
