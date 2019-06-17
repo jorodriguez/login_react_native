@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
-
 import {
     ScrollView,
     Text,
     TextInput,
     View,
-    Button, 
-    Alert,
-    ActivityIndicator,
-    AsyncStorage
+    Button, Alert,
+    ActivityIndicator
 } from 'react-native';
 
 
 export default class Login extends Component {
-
-    urlLogin = "http://localhost:5000/auth/login";
-
     state = {
         username: 'test@gmail.com',
         password: '123',
@@ -35,36 +29,15 @@ export default class Login extends Component {
 
         this.setState({ isLoggingIn: true, message: '' });
 
-        var data = { correo: this.state.username, password: this.state.password };
-
         var proceed = false;
-
-        await fetch(this.urlLogin, {
-            method: "POST",
-            body: JSON.stringify(data),
+       
+        await fetch("https://develop1.herokuapp.com/api/login?usuario=" + this.state.username + "&password=" + this.state.password, {
+            method: "GET",
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => response.json())
             .then((responseJson) => {
-
-                //this.mensajeToast(JSON.stringify(result));
-                if (responseJson.auth) {
-                    
-                    proceed = true;
-                    this.saveItemStorage("usuario_sesion", this.responseJson);
-                    this.saveItemStorage("jwt", this.responseJson.token);                    
-                    this.setState({
-                        usuario: responseJson
-                    });
-                   
-                    Alert.alert(`Bienvenido ${responseJson.nombre}`);
-                    this.props.navigation.navigate('Principal');
-                } else {
-                    Alert.alert('El usuario no existe.');          
-                }
-
-                /*
                 if (responseJson.id != undefined) {
                     proceed = true;
 
@@ -80,33 +53,20 @@ export default class Login extends Component {
                     Alert.alert(`Bienvenido ${responseJson.nombre}`);
                 } else {
                     Alert.alert('El usuario no existe.');
-                }*/
+                }
             })
             .then(() => {
                 this.setState({ isLoggingIn: false })
-                if (proceed) {
+                if (proceed) {                   
                     this.props.onLoginPress(this.state.usuario);
                 }
             })
             .catch(err => {
                 this.setState({ message: err.message });
                 this.setState({ isLoggingIn: false });
-
+              
             });
     }
-
-
-    //save the session
-
-    async saveItemStorage(item, selectedValue) {
-        try {
-          await AsyncStorage.setItem(item, selectedValue);
-        } catch (error) {
-          console.error('AsyncStorage error: ' + error.message);
-        }
-      }
-    
-
 
     clearUsername = () => {
         this._username.setNativeProps({ text: '' });
@@ -131,8 +91,8 @@ export default class Login extends Component {
                     onChangeText={(username) => this.setState({ username })}
                     autoFocus={true}
                     onFocus={this.clearUsername}
-                />
-                <TextInpu
+                />s
+                <TextInput
                     ref={component => this._password = component}
                     placeholder='Password'
                     onChangeText={(password) => this.setState({ password })}
@@ -140,7 +100,7 @@ export default class Login extends Component {
                     onFocus={this.clearPassword}
                     onSubmitEditing={this._userLogin}
                 />
-
+                
                 {this.state.isLoggingIn && <ActivityIndicator />}
                 <View style={{ margin: 7 }} />
                 <Button

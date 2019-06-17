@@ -5,7 +5,12 @@ import {
     View,
     Button, ListView,StyleSheet,Alert
 } from 'react-native';
+
+import PushNotification from 'react-native-push-notification';
+
 //import { Row } from './Row';
+
+//Usar https://github.com/zo0r/react-native-push-notification/blob/f42723817f1687e0da23e6753eb8a9f0385b6ac5/README.md
 
 export default class Principal extends Component {
     //https://jsonplaceholder.typicode.com/users
@@ -19,6 +24,38 @@ export default class Principal extends Component {
         this.state = { usuario: props.usuario };
 
     }
+
+   /* componentWillMount(){
+        PushNotification.configure({
+
+            // (optional) Called when Token is generated (iOS and Android)
+            onRegister: function(token) {
+                console.log( 'TOKEN:', token );
+            },
+        
+            // (required) Called when a remote or local notification is opened or received
+            onNotification: function(notification) {
+                console.log( 'NOTIFICATION:', notification );
+            },
+        
+            // ANDROID ONLY: (optional) GCM Sender ID.
+            senderID: "119606004783",
+        
+            // IOS ONLY (optional): default: all - Permissions to register.
+            permissions: {
+                alert: true,
+                badge: true,
+                sound: true
+            },
+        
+            // Should the initial notification be popped automatically
+            // default: true
+            popInitialNotification: true,
+                 
+            requestPermissions: true,
+        });
+    }*/
+
 
     //async componentDidMount() {
   /*  _loadUsers = async () => {
@@ -49,7 +86,7 @@ export default class Principal extends Component {
             <ScrollView style={{ padding: 20 }}>
                 <Text
                     style={{ fontSize: 27 }}>
-                    Bienvenido {this.state.usuario.nombre}
+                    Bienvenido 
                 </Text>
                 <View style={{ margin: 20 }} />
                 <Button
